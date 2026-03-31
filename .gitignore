@@ -1,5 +1,7 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
+.m2repo/
+.mvn/maven-3.9.6/
 *.class
 *.jar
 *.war
