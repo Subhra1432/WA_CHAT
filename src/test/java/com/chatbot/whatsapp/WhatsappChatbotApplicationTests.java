@@ -34,42 +34,42 @@ class WhatsappChatbotApplicationTests {
 
     @Test
     void testHiReply() {
-        IncomingMessage msg = new IncomingMessage("919876543210", "Test", "Hi");
+        IncomingMessage msg = new IncomingMessage("919876543210", null, "Test", "Hi");
         OutgoingMessage reply = chatbotService.processMessage(msg);
         assertThat(reply.getReply()).contains("Hello");
     }
 
     @Test
     void testByeReply() {
-        IncomingMessage msg = new IncomingMessage("919876543210", "Test", "Bye");
+        IncomingMessage msg = new IncomingMessage("919876543210", null, "Test", "Bye");
         OutgoingMessage reply = chatbotService.processMessage(msg);
         assertThat(reply.getReply()).contains("Goodbye");
     }
 
     @Test
     void testHelpReply() {
-        IncomingMessage msg = new IncomingMessage("919876543210", "Test", "help");
+        IncomingMessage msg = new IncomingMessage("919876543210", null, "Test", "help");
         OutgoingMessage reply = chatbotService.processMessage(msg);
         assertThat(reply.getReply()).contains("Available commands");
     }
 
     @Test
     void testCaseInsensitive() {
-        IncomingMessage msg = new IncomingMessage("919876543210", "Test", "HI");
+        IncomingMessage msg = new IncomingMessage("919876543210", null, "Test", "HI");
         OutgoingMessage reply = chatbotService.processMessage(msg);
         assertThat(reply.getReply()).contains("Hello");
     }
 
     @Test
     void testUnknownMessageGetsDefaultReply() {
-        IncomingMessage msg = new IncomingMessage("919876543210", "Test", "random text");
+        IncomingMessage msg = new IncomingMessage("919876543210", null, "Test", "random text");
         OutgoingMessage reply = chatbotService.processMessage(msg);
         assertThat(reply.getReply()).contains("didn't understand");
     }
 
     @Test
     void testReplyToField() {
-        IncomingMessage msg = new IncomingMessage("919876543210", "Test", "Hi");
+        IncomingMessage msg = new IncomingMessage("919876543210", null, "Test", "Hi");
         OutgoingMessage reply = chatbotService.processMessage(msg);
         assertThat(reply.getTo()).isEqualTo("919876543210");
     }

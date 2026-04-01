@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Global exception handler for clean error responses.
- */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

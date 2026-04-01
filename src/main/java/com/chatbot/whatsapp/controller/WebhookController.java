@@ -9,10 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * REST controller that exposes the /webhook endpoint.
- * Simulates a WhatsApp Business API webhook receiver.
- */
 @RestController
 @RequestMapping("/webhook")
 public class WebhookController {
@@ -25,40 +21,37 @@ public class WebhookController {
         this.chatbotService = chatbotService;
     }
 
-    /**
-     * POST /webhook
-     *
-     * Receives a simulated WhatsApp message and returns a chatbot reply.
-     *
-     * @param incoming the incoming message payload
-     * @return ResponseEntity containing the chatbot's reply
-     */
-    @PostMapping
-    public ResponseEntity<OutgoingMessage> receiveMessage(
+    @PostMapping(consumes = "application/json", produces = "text/plain")
+    public ResponseEntity<String> receiveMessageJson(
             @Valid @RequestBody IncomingMessage incoming) {
 
         OutgoingMessage reply = chatbotService.processMessage(incoming);
-        return ResponseEntity.ok(reply);
+        return ResponseEntity.ok(reply.getReply());
     }
 
-    /**
-     * GET /webhook
-     *
-     * Health-check / verification endpoint (mirrors WhatsApp webhook verification).
-     */
+    @PostMapping(consumes = "text/plain", produces = "text/plain")
+    public ResponseEntity<String> receiveMessageText(@RequestBody String message) {
+
+        IncomingMessage incoming = new IncomingMessage();
+        incoming.setFrom("User");
+        incoming.setMessage(message);
+        
+        OutgoingMessage reply = chatbotService.processMessage(incoming);
+        return ResponseEntity.ok(reply.getReply());
+    }
+
     @GetMapping
     public ResponseEntity<String> verifyWebhook(
             @RequestParam(value = "hub.mode", required = false) String mode,
             @RequestParam(value = "hub.verify_token", required = false) String token,
             @RequestParam(value = "hub.challenge", required = false) String challenge) {
 
-        logger.info("🔍 Webhook verification request — mode={}, token={}", mode, token);
+        logger.info("Webhook verification request - mode={}, token={}", mode, token);
 
-        // Simple verification: if a challenge is provided, echo it back
         if (challenge != null && !challenge.isEmpty()) {
             return ResponseEntity.ok(challenge);
         }
 
-        return ResponseEntity.ok("✅ WhatsApp Chatbot Webhook is active!");
+        return ResponseEntity.ok("WhatsApp Chatbot Webhook is active!");
     }
 }

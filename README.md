@@ -1,24 +1,24 @@
-# 💬 WhatsApp Chatbot Backend Simulation
+# WhatsApp Chatbot Backend Simulation
 
-A simple WhatsApp chatbot backend simulation built with **Java 17** and **Spring Boot 3.4.4**.
+A simple WhatsApp chatbot backend simulation built with **Java 21** and **Spring Boot 3.4.4**.
 
-## 🚀 Features
+## Features
 
-- **REST API Webhook** (`POST /webhook`) — Receives simulated WhatsApp messages
-- **Predefined Replies** — Keyword-based auto-responses (case-insensitive):
+- **REST API Webhook** (`POST /webhook`) - Receives simulated WhatsApp messages
+- **Predefined Replies** - Keyword-based auto-responses (case-insensitive):
   | Input | Response |
   |-------|----------|
-  | `Hi` | Hello! 👋 How can I help you today? |
-  | `Hello` | Hi there! 😊 Welcome to our WhatsApp chatbot! |
-  | `Bye` | Goodbye! 👋 Have a great day! |
-  | `Help` | 📋 Lists available commands |
-  | `Thanks` / `Thank you` | You're welcome! 😊 |
-  | _anything else_ | 🤖 Default "type help" response |
-- **Message Logging** — Every incoming message is logged with timestamp, sender, and content
-- **Input Validation** — Clean error responses for malformed requests
-- **Webhook Verification** — `GET /webhook` endpoint mirrors WhatsApp verification flow
+  | `Hi` | Hello! How can I help you today? |
+  | `Hello` | Hi there! Welcome to our WhatsApp chatbot! |
+  | `Bye` | Goodbye! Have a great day! |
+  | `Help` | Lists available commands |
+  | `Thanks` / `Thank you` | You're welcome! |
+  | _anything else_ | Default "type help" response |
+- **Message Logging** - Every incoming message is logged with timestamp, sender, and content
+- **Input Validation** - Clean error responses for malformed requests
+- **Webhook Verification** - `GET /webhook` endpoint mirrors WhatsApp verification flow
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 whatsapp-chatbot/
@@ -38,88 +38,76 @@ whatsapp-chatbot/
     └── WhatsappChatbotApplicationTests.java  # Unit + integration tests
 ```
 
-## 🛠️ Prerequisites
+## Prerequisites
 
-- Java 17+
+- Java 21+
 - Maven 3.8+
 
-## ▶️ Run Locally
+## Run Locally
 
 ```bash
-# Clone the repo
-git clone https://github.com/<your-username>/whatsapp-chatbot.git
+git clone https://github.com/Subhra1432/WA_CHAT.git
 cd whatsapp-chatbot
-
-# Build and run
 ./mvnw spring-boot:run
 ```
 
-The server starts at **http://localhost:8080**
+The server starts at **http://localhost:8282**
 
-## 🧪 Test the API
+## Chat with the Bot
 
-### Send "Hi"
+The easiest way to interact is with the new **Interactive Modes**:
+
+### Option 1: Web Interface
+Just open your browser to:
+**[http://localhost:8282](http://localhost:8282)**
+
+---
+
+### Option 2: Terminal Chat
+No more typing long curl commands. Just run the interactive script:
 ```bash
-curl -X POST http://localhost:8080/webhook \
+./chat.sh
+```
+
+---
+
+### Option 3: Advanced Mode
+If you need to simulate specific sender names or test the JSON API directly:
+
+#### Send "Hi"
+```bash
+curl -X POST http://localhost:8282/webhook \
   -H "Content-Type: application/json" \
   -d '{"from":"919876543210","name":"Subhrakanta","message":"Hi"}'
 ```
 
-**Response:**
-```json
-{
-  "to": "919876543210",
-  "reply": "Hello! 👋 How can I help you today?"
-}
-```
-
-### Send "Bye"
+#### Health Check
 ```bash
-curl -X POST http://localhost:8080/webhook \
-  -H "Content-Type: application/json" \
-  -d '{"from":"919876543210","name":"Subhrakanta","message":"Bye"}'
+curl http://localhost:8282/webhook
 ```
 
-**Response:**
-```json
-{
-  "to": "919876543210",
-  "reply": "Goodbye! 👋 Have a great day!"
-}
-```
-
-### Health Check
-```bash
-curl http://localhost:8080/webhook
-```
-
-**Response:**
-```
-✅ WhatsApp Chatbot Webhook is active!
-```
-
-## ✅ Run Tests
+## Run Tests
 
 ```bash
 ./mvnw test
 ```
 
-## 🌐 Deploy on Render (Free)
+## Deploy on Render
 
 1. Push to GitHub
-2. Go to [render.com](https://render.com) → **New Web Service**
+2. Go to [render.com](https://render.com) -> **New Web Service**
 3. Connect your GitHub repo
 4. Configure:
    - **Build Command:** `./mvnw clean package -DskipTests`
    - **Start Command:** `java -jar target/whatsapp-chatbot-0.0.1-SNAPSHOT.jar`
-   - **Environment:** `Docker` (uses the included `Dockerfile`)
-5. Deploy! 🎉
+   - **Environment:** `Docker`
+5. Deploy!
 
-## 📦 Tech Stack
+## Tech Stack
 
 | Technology | Purpose |
 |------------|---------|
-| Java 17 | Language |
+| Java 21 (JDK 21) | Language |
 | Spring Boot 3.4.4 | Framework |
 | Spring Web | REST API |
 | Jakarta Validation | Input validation |
@@ -127,6 +115,6 @@ curl http://localhost:8080/webhook
 | JUnit 5 + MockMvc | Testing |
 | Maven | Build tool |
 
-## 📄 License
+## License
 
-MIT License — free to use for assignments and projects.
+MIT License - free to use for assignments and projects.
